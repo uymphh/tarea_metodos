@@ -14,6 +14,7 @@ fn take_string_as_vector() -> Vec<char> {
 }
 
 fn imc() {
+    clear_screen();
     println!("Dime tu peso: ");
     let peso: f64 = take_int() as f64;
     println!("Dime tu altura: ");
@@ -23,6 +24,7 @@ fn imc() {
 }
 
 fn palindromo() {
+    clear_screen();
     println!("Dime tu palabra para saber si es palindromo: ");
     let palabra = take_string_as_vector();
     let mut palindromo = true;
@@ -42,6 +44,7 @@ fn palindromo() {
     }
 }
 fn escalera_no_recursivo() {
+    clear_screen();
     println!("Dime que escalon calcular");
     let escalon = take_int();
     let mut swap;
@@ -63,7 +66,8 @@ fn escalera_recursivo(a: usize) -> usize {
 }
 
 fn busqueda_de_telefono() {
-    println!("Que nombre busco?: ")
+    clear_screen();
+    println!("Que nombre busco?: ");
     let nombre = take_string_as_vector();
     let lista: Vec<&str> = vec![
         "Adrian",
@@ -156,28 +160,43 @@ fn busqueda_de_telefono() {
             break;
         }
     }
-    println!("No esta :c")
+    println!("No esta :c");
+}
+fn clear_screen() {
+    print!("\x1B[2J\x1B[H");
 }
 
+fn clear_screen_enter() {
+    println!("Presione enter para continuar...");
+    std::io::stdin().read_line(&mut String::new()).unwrap();
+    print!("\x1B[2J\x1B[H");
+}
 fn main() {
-    println!("==Menu de Codigos==");
-    println!("==1...........IMC==");
-    println!("==2....PALINDROMO==");
-    println!("==3...ESCALERA_IT==");
-    println!("==4...ESCALERA_RE==");
-    println!("==5....DIRECTORIO==");
-    let num = take_int();
-    match num {
-        1 => imc(),
-        2 => palindromo(),
-        3 => escalera_no_recursivo(),
-        4 => {
-            println!("Dime que escalon calcular");
-            let escalon = take_int();
-            let formas = escalera_recursivo(escalon);
-            println!("Hay {} formas de subir {} escalones", formas, escalon)
+    loop {
+        clear_screen_enter();
+        println!("==Menu de Codigos==");
+        println!("==1...........IMC==");
+        println!("==2....PALINDROMO==");
+        println!("==3...ESCALERA_IT==");
+        println!("==4...ESCALERA_RE==");
+        println!("==5....DIRECTORIO==");
+        println!("==6.........SALIR==");
+        println!("\nElige uno: ");
+        let num = take_int();
+        match num {
+            1 => imc(),
+            2 => palindromo(),
+            3 => escalera_no_recursivo(),
+            4 => {
+                clear_screen();
+                println!("Dime que escalon calcular");
+                let escalon = take_int();
+                let formas = escalera_recursivo(escalon);
+                println!("Hay {} formas de subir {} escalones", formas, escalon)
+            }
+            5 => busqueda_de_telefono(),
+            6 => return,
+            _ => println!("error"),
         }
-        5 => busqueda_de_telefono(),
-        _ => println!("error"),
-    };
+    }
 }
